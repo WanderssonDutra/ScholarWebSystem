@@ -10,7 +10,7 @@ A software web system to manage students and their grades, as well as scholar pe
 <br><br>
 ## EndPoints
 <br>
-###Student Endpoints
+### Student Endpoints
 <br>
 *student/all - GET: return all the students records.\
 *student/id/{id} - GET: return a student record by it's id.\
