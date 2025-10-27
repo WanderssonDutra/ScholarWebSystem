@@ -8,9 +8,9 @@ A software web system to manage students and their grades, as well as scholar pe
 ## EndPoints<br/>
 ### Student Endpoints<br/>
 GET
-  -* student/all - GET: return all the students records.
-  -* student/id/{id} - GET: return a student record by it's id.
-  -* student/name/{name} - GET: return a list of student records searched by name.
+-* student/all - GET: return all the students records.
+-* student/id/{id} - GET: return a student record by it's id.
+-* student/name/{name} - GET: return a list of student records searched by name.
 POST
-  -* student/new - POST: record a student object in the database.
-  -* student/update - PUT: updates a student record.
+-* student/new - POST: record a student object in the database.
+-* student/update - PUT: updates a student record.
