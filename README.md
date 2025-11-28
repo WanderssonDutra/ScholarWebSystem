@@ -17,7 +17,7 @@ A software web system to manage students and their grades, as well as scholar pe
   * student/update/{code}: updates a student from the DB
 
 ### ProfessorController Endpoints<br/>
- * GET
+* GET
   * professor/all: returns all professors from DB
   * professor/id/{code}: returns a professor with the specified id
   * professor/name/{name}: returns all the professors with the matched name 
