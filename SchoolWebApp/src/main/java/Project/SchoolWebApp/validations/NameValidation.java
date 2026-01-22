@@ -18,6 +18,8 @@ public class NameValidation implements ConstraintValidator<ValidName, String> {
     @Override
     public boolean isValid(String name, ConstraintValidatorContext context) {
 
+        if(name == null)
+            return true;
         return pattern.matcher(name).matches();
     }
 }

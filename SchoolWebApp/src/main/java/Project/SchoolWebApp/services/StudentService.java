@@ -2,11 +2,10 @@ package Project.SchoolWebApp.services;
 
 import Project.SchoolWebApp.dtos.student_dtos.StudentBasicInfoDTO;
 import Project.SchoolWebApp.dtos.student_dtos.StudentDTO;
-import Project.SchoolWebApp.exceptions.BadRequestException;
+import Project.SchoolWebApp.dtos.student_dtos.StudentUpdateDTO;
 import Project.SchoolWebApp.exceptions.DataConflictException;
 import Project.SchoolWebApp.exceptions.DataNotFoundException;
 import Project.SchoolWebApp.factory.UserCodeFactory;
-import Project.SchoolWebApp.mappers.IntegerMap;
 import Project.SchoolWebApp.mappers.UserMap;
 import Project.SchoolWebApp.models.Student;
 import Project.SchoolWebApp.repositories.StudentRepository;
@@ -40,10 +39,6 @@ public class StudentService {
      * @return A StudentBasicInfoDTO
      */
     public StudentBasicInfoDTO searchByCode(String code){
-
-        if(!(code.substring(0,3).contains("std") && code.substring(4,9).matches("^[0-9]+$")))
-            throw new BadRequestException("the code must begin with the letters: \"std\" " +
-                    "following a sequence of six numbers.");
 
         StudentBasicInfoDTO responseDTO = studentRepository.findById(code)
                         .map(StudentBasicInfoDTO::new)
@@ -102,22 +97,37 @@ public class StudentService {
      * @param data
      * @return a StudentBasicInfoDTO of the updated student
      */
-    public StudentBasicInfoDTO update(String code, StudentDTO data){
+    public StudentBasicInfoDTO update(String code, StudentUpdateDTO data){
 
-        Student student = studentRepository.findById(code).orElseThrow(()-> new RuntimeException
-                                                                    ("the student with " +
-                                                                            "this id don't exist."));
-        if(studentRepository.existsByEmail(data.email())){
+        Student student = studentRepository.findById(code).orElseThrow(()-> new DataNotFoundException
+                                                                    ("there is no student with this id"));
 
-            if(student.getEmail().equals(data.email()))
-                throw new DataConflictException("the account already uses this email.");
+        if(student.getEmail().equals(data.email()))
+            throw new DataConflictException("the account already uses this email.");
 
+        if(studentRepository.existsByEmail(data.email()))
             throw new DataConflictException("this email is already in use.");
-        }
 
         student = UserMap.updateEntity(data, student);
         studentRepository.saveAndFlush(student);
 
         return UserMap.toDTO(student);
+    }
+
+    /***
+     * Delete the student by informing id
+     * @param code id used to find the student to be deleted
+     * @return the basic information of the deleted student
+     */
+    public StudentBasicInfoDTO delete(String code){
+
+        Student student = studentRepository.findById(code)
+                                               .orElseThrow(()-> new DataNotFoundException
+                                                       ("there is no user with this code"));
+        StudentBasicInfoDTO response = UserMap.toDTO(student);
+
+        studentRepository.delete(student);
+
+        return response;
     }
 }

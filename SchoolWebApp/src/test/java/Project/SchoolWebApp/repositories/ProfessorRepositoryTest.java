@@ -18,8 +18,7 @@ public class ProfessorRepositoryTest {
     @Autowired
     ProfessorRepository professorRepository;
 
-    @Mock
-    Professor professor;
+    private Professor professor;
 
     @Test
     @DisplayName("should get all the professors that matches the searched name")

@@ -1,9 +1,12 @@
 package Project.SchoolWebApp.controllers;
 
+import Project.SchoolWebApp.annotations.ValidCode;
 import Project.SchoolWebApp.annotations.ValidName;
 import Project.SchoolWebApp.dtos.student_dtos.StudentBasicInfoDTO;
 import Project.SchoolWebApp.dtos.student_dtos.StudentDTO;
+import Project.SchoolWebApp.dtos.student_dtos.StudentUpdateDTO;
 import Project.SchoolWebApp.services.StudentService;
+import Project.SchoolWebApp.validations.ValidationType;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,8 @@ public class StudentController {
     }
 
     @GetMapping("/id/{code}")
-    public ResponseEntity<StudentBasicInfoDTO> searchByCode(@PathVariable String code){
+    public ResponseEntity<StudentBasicInfoDTO> searchByCode(@ValidCode(type = ValidationType.STUDENT_CODE)
+                                                                @PathVariable String code){
 
         StudentBasicInfoDTO responseDTO = studentService.searchByCode(code);
 
@@ -50,12 +54,23 @@ public class StudentController {
         return new ResponseEntity<StudentBasicInfoDTO>(student, HttpStatus.CREATED);
     }
 
-    @PutMapping("update/{code}")
-    public ResponseEntity<StudentBasicInfoDTO> updatedStudent(@PathVariable String code,
-                                                              @Valid @RequestBody StudentDTO data){
+    @PutMapping("/update/{code}")
+    public ResponseEntity<StudentBasicInfoDTO> updateStudent(@ValidCode(type = ValidationType
+                                                                         .STUDENT_CODE)
+                                                              @PathVariable String code,
+                                                             @Valid @RequestBody StudentUpdateDTO data){
 
         StudentBasicInfoDTO DTO = studentService.update(code, data);
 
         return new ResponseEntity<>(DTO, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/delete/{code}")
+    public ResponseEntity<StudentBasicInfoDTO> deleteStudent(@ValidCode(type = ValidationType.STUDENT_CODE)
+                                                                 @PathVariable String code){
+
+        StudentBasicInfoDTO response = studentService.delete(code);
+
+        return new ResponseEntity<StudentBasicInfoDTO>(response, HttpStatus.OK);
     }
 }

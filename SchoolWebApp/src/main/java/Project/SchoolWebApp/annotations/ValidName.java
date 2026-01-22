@@ -12,7 +12,7 @@ import java.lang.annotation.*;
 public @interface ValidName {
 
     String regex() default "^[\\p{L}]+(?:[ '-][\\p{L}]+)*$";
-    String message() default "The name must not have numbers or special characters.";
+    String message() default "The name must not have numbers or special characters";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
 }

@@ -14,8 +14,8 @@ import java.time.LocalDate;
  * @param birthDate
  * @param yearOfEnrollment
  */
-public record StudentDTO(@ValidName @NotBlank String name,
-                         @ValidEmail @NotBlank String email,
+public record StudentDTO(@NotBlank @ValidName  String name,
+                         @NotBlank @ValidEmail String email,
                          @NotBlank String password,
                          @NotNull LocalDate birthDate,
                          @NotNull LocalDate yearOfEnrollment) {

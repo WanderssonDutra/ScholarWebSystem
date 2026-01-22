@@ -2,8 +2,10 @@ package Project.SchoolWebApp.mappers;
 
 import Project.SchoolWebApp.dtos.professor_dtos.ProfessorBasicInfoDTO;
 import Project.SchoolWebApp.dtos.professor_dtos.ProfessorDTO;
+import Project.SchoolWebApp.dtos.professor_dtos.ProfessorUpdateDTO;
 import Project.SchoolWebApp.dtos.student_dtos.StudentBasicInfoDTO;
 import Project.SchoolWebApp.dtos.student_dtos.StudentDTO;
+import Project.SchoolWebApp.dtos.student_dtos.StudentUpdateDTO;
 import Project.SchoolWebApp.factory.UserFactory;
 import Project.SchoolWebApp.models.Professor;
 import Project.SchoolWebApp.models.Student;
@@ -14,9 +16,9 @@ import Project.SchoolWebApp.models.Student;
 public class UserMap{
 
     /**
-     * Passes data from dto to entity
+     * Transfer data from DTO to student
      * @param data A data transfer object
-     * @param code Id to be added to a Student id property
+     * @param code Student id
      * @return Student object
      */
     public static Student toEntity(StudentDTO data, String code){
@@ -39,9 +41,9 @@ public class UserMap{
     }
 
     /**
-     * passes data from dto to entity
+     * Transfer data from DTO to professor
      * @param data A data transfer object
-     * @param code Id to be added to a Professor id property
+     * @param code Professor id
      * @return Professor object
      */
     public static Professor toEntity(ProfessorDTO data, String code){
@@ -62,19 +64,22 @@ public class UserMap{
     }
 
     /**
-     * transfer the data from the Data Transfer Operation to a student Entity
+     * transfer data from DTO to Student
      * @param data A data transfer object
      * @param student A student object
-     * @return a student entity with the updated data
+     * @return The updated student object
      */
-    public static Student updateEntity(StudentDTO data, Student student){
+    public static Student updateEntity(StudentUpdateDTO data, Student student){
 
         if(data.name() != null)
-            student.setName(data.name());
+            if(!data.name().isBlank())
+                student.setName(data.name());
         if(data.email() != null)
-            student.setEmail(data.email());
+            if(!data.email().isBlank())
+                student.setEmail(data.email());
         if(data.password() != null)
-            student.setPassword(data.password());
+            if(!data.password().isBlank())
+                student.setPassword(data.password());
         if (data.birthDate() != null)
             student.setBirthDate(data.birthDate());
         if (data.yearOfEnrollment() != null)
@@ -84,8 +89,31 @@ public class UserMap{
     }
 
     /**
-     * Passes data from entity to dto
-     * @param student Object from the Student class
+     * transfer the updated data from DTO to Professor
+     * @param data DTO with data to update
+     * @param professor the professor to be updated
+     * @return The updated professor object
+     */
+    public static Professor updateEntity(ProfessorUpdateDTO data, Professor professor){
+
+        if(data.name() != null)
+            if(!data.name().isBlank())
+                professor.setName(data.name());
+        if(data.email() != null)
+            if(!data.email().isBlank())
+                professor.setEmail(data.email());
+        if(data.password() != null)
+            if(!data.password().isBlank())
+                professor.setPassword(data.password());
+        if (data.birthDate() != null)
+            professor.setBirthDate(data.birthDate());
+
+        return professor;
+    }
+
+    /**
+     * Receives data from Student to a DTO
+     * @param student Object from student class
      * @return A new StudentBasicInfoDTO instance
      */
     public static StudentBasicInfoDTO toDTO(Student student){
@@ -94,7 +122,7 @@ public class UserMap{
     }
 
     /**
-     * Passes data from entity to dto
+     * Receives data from Professor to a DTO
      * @param professor Object from the Professor class
      * @return a new ProfessorBasicInfoDTO instance
      */
