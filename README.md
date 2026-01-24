@@ -10,16 +10,24 @@ A software web system to manage students and their grades, as well as scholar pe
 ### StudentController Endpoints<br/>
 
 * GET
-  * student/all: returns all students
+  * student/all: returns all students from DB
   * student/id/{code}: returns a student with the specified id
   * student/name/{name}: returns all students with the matched name
 * POST
-  * student/new: creates a new record of student in DB
+  * student/new: creates a new student in DB
 * PUT
-  * student/update/{code}: updates a student from the DB
+  * student/update/{code}: update student from DB
+* DELETE
+  * student/delete/{code}: deletes student from DB
 
 ### ProfessorController Endpoints<br/>
 * GET
   * professor/all: returns all professors from DB
   * professor/id/{code}: returns a professor with the specified id
-  * professor/name/{name}: returns all the professors with the matched name 
+  * professor/name/{name}: returns all the professors with the matched name
+* POST
+  * professor/new: creates a new professor in DB
+* PUT
+  * professor/update/{code}: update professor from DB
+* DELETE
+  * professor/delete/{code}: deletes professor from DB
